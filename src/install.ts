@@ -19,7 +19,7 @@ import * as path from "path";
  * @param products A list of products to install (e.g. ["MATLAB", "Simulink"]).
  */
 export async function install(platform: string, architecture: string, release: string, products: string[]) {
-    const releaseInfo = await matlab.getReleaseInfo(release);
+    const releaseInfo = {name: "R2023a", version: "2023.1.999", update: "U1"}
 
     // Install runtime system dependencies for MATLAB on Linux
     if (platform === "linux") {
@@ -35,7 +35,7 @@ export async function install(platform: string, architecture: string, release: s
             destination = destination + "/MATLAB.app";
         }
         if (!alreadyExists) {
-            await mpm.install(mpmPath, releaseInfo, products, destination);
+            await mpm.install(mpmPath, release, products, destination);
         }
         core.addPath(path.join(destination, "bin"));
         core.setOutput('matlabroot', destination);
