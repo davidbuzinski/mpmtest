@@ -37,7 +37,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: built-action
-      - run: apt-get update && apt-get install --no-install-recommends -y wget unzip ca-certificates
+      - run: sudo apt-get update && sudo apt-get install --no-install-recommends -y wget unzip ca-certificates
       - run: wget https://mpmtest.s3.amazonaws.com/2023_04_27_11_22_46.zip
       - run: unzip 2023_04_27_11_22_46.zip
       - name: Install selected products
