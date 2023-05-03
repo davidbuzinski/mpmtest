@@ -37,9 +37,26 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: built-action
+
       - run: sudo apt-get update && sudo apt-get install --no-install-recommends -y wget unzip ca-certificates
-      - run: wget https://mpmtest.s3.amazonaws.com/2023_04_27_11_22_46.zip
-      - run: unzip 2023_04_27_11_22_46.zip
+
+      - name: Get cached MATLAB
+        id: cache-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: 2023_04_27_11_22_46.zip
+          key: matlab-download
+
+      - run: wget -q https://mpmtest.s3.amazonaws.com/2023_04_27_11_22_46.zip
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+
+      - name: Save MATLAB download
+        id: cache-save
+        uses: actions/cache/save@v3
+        with:
+          path: 2023_04_27_11_22_46.zip
+          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
+
       - name: Install selected products
         id: setup_matlab
         uses: ./
