@@ -41,7 +41,8 @@ export async function setup(platform: string, architecture: string): Promise<str
     return mpm
 }
 
-export async function install(mpmPath: string, release: string, products: string[], destination: string) {
+export async function install(mpmPath: string, release: matlab.Release, products: string[], destination: string) {
+    const mpmRelease = release.name + release.update 
     // remove spaces and flatten product list
     let parsedProducts = products.flatMap(p => p.split(" "));
     // Add MATLAB and PCT by default
@@ -50,7 +51,7 @@ export async function install(mpmPath: string, release: string, products: string
     parsedProducts = [...new Set(parsedProducts)];
     let mpmArguments: string[] = [
         "install",
-        `--source=${release}`,    
+        `--release=${mpmRelease}`,    
         `--destination=${destination}`,
         "--products",
     ]
