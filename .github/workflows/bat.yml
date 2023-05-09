@@ -1,0 +1,49 @@
+name: Build and Test
+on: [push]
+
+jobs:
+  bat:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Perform npm tasks
+        run: npm run ci
+      - uses: actions/upload-artifact@v3
+        with:
+          name: built-action
+          path: |
+            **/*
+            !node_modules/
+
+  integ:
+    needs: bat
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - os: ubuntu-latest
+            release: latest
+            command: assert(~isempty(regexp(version('-release'), '\d{4}.')))
+          - os: macos-latest
+            release: latest
+            command: assert(~isempty(regexp(version('-release'), '\d{4}.')))
+          - os: windows-latest
+            release: latest
+            command: assert(~isempty(regexp(version('-release'), '\d{4}.')))
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: built-action
+      - name: Perform 'setup-matlab'
+        uses: ./
+        with:
+          release: ${{ matrix.release }}
+      - name: Run Sample MATLAB Command
+        uses: matlab-actions/run-command@v1
+        with:
+          command: ${{ matrix.command }}
