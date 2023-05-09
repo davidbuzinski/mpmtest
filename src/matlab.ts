@@ -15,6 +15,7 @@ export interface Release {
 }
 
 export async function makeToolcacheDir(release: Release, platform: string): Promise<[string, boolean]> {
+    /* 
     let toolpath: string = tc.find("MATLAB", release.version);
     let alreadyExists = false;
     if (toolpath) {
@@ -26,6 +27,9 @@ export async function makeToolcacheDir(release: Release, platform: string): Prom
         io.rmRF(".keep");
     }
     return [toolpath, alreadyExists]
+    */
+   const tmpdir: string = process.env["RUNNER_TEMP"] || "";
+   return [tmpdir, false]
 }
 
 export async function setupBatch(platform: string) {

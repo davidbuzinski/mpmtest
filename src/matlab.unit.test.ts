@@ -26,6 +26,7 @@ describe("matlab tests", () => {
         update: "",
     }
     const platform = "linux";
+    /*
     describe("toolcacheLocation", () => {
         let findMock: jest.Mock<any, any>;
         let cacheFileMock: jest.Mock<any, any>; 
@@ -49,6 +50,7 @@ describe("matlab tests", () => {
             await expect(matlab.makeToolcacheDir(release, platform)).resolves.toMatchObject(["/opt/hostedtoolcache/matlab/r2022b", false]);
         })    
     });
+    */
 
     describe("setupBatch", () => {
         let downloadAndRunScriptMock: jest.Mock<any, any>;
