@@ -55,6 +55,9 @@ export async function install(mpmPath: string, release: matlab.Release, products
         `--destination=${destination}`,
         "--products",
     ]
+    if (release.name >= "r2023a") {
+        mpmArguments = mpmArguments.concat("--no-gpu");
+    }
     mpmArguments = mpmArguments.concat(parsedProducts);
 
     const exitCode = await exec.exec(mpmPath, mpmArguments);

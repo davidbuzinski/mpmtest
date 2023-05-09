@@ -11,7 +11,7 @@
         "build": "tsc",
         "package": "ncc build --minify",
         "test": "jest",
-        "all": "npm run test && npm build && npm run package",
+        "all": "npm run test && npm run build && npm run package",
         "ci": "npm run clean && npm ci && npm run all"
     },
     "files": [
