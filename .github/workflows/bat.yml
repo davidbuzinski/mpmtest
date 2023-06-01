@@ -33,4 +33,8 @@ jobs:
           chmod +x mpm
       - name: Install MATLAB
         run: |
-          ./mpm install --source $(pwd)/2023_06_01_09_45_50 --destination $(pwd) --products MATLAB Parallel_Computing_Toolbox
+          ./mpm install --source "$(pwd)/2023_06_01_09_45_50" --destination "$(pwd)" --products MATLAB Parallel_Computing_Toolbox
+      - name: Look see
+        run: |
+          ls
+          ls 2023_06_01_09_45_50
