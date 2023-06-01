@@ -20,6 +20,9 @@ jobs:
         with:
           path: 2023_06_01_09_45_50
           key: cache-matlab
+      - name: Setup deps
+        run: |
+          wget -qO- --retry-connrefused https://ssd.mathworks.com/supportfiles/ci/matlab-batch/v0/install.sh | sudo bash -s
       - name: Get files for installer
         if: steps.cache-matlab.outputs.cache-hit != 'true'
         run: |
@@ -36,7 +39,8 @@ jobs:
       - name: Install MATLAB
         run: |
           ./mpm install --source "$(pwd)/2023_06_01_09_45_50" --destination "$(pwd)" --products MATLAB Parallel_Computing_Toolbox
-      - name: Look see
-        run: |
-          ls
-          ls 2023_06_01_09_45_50
+          echo "$(pwd)/bin" >> $GITHUB_PATH
+      - name: Run Sample MATLAB Command
+        uses: matlab-actions/run-command@v1
+        with:
+          command: assert(~isempty(regexp(version('-release'), '\d{4}.')))
