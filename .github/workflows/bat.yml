@@ -31,6 +31,7 @@ jobs:
       - name: Setup mpm
         run: |
           wget -q mathworks.com/mpm/glnxa64/mpm -o mpm
+          cat mpm* > mpm
           chmod +x mpm
       - name: Install MATLAB
         run: |
