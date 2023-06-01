@@ -39,8 +39,6 @@ jobs:
         uses: matlab-actions/setup-matlab@v2-beta
       - name: Perform 'setup-matlab'
         uses: ./
-        with:
-          release: ${{ matrix.release }}
       - name: Run Sample MATLAB Command
         uses: matlab-actions/run-command@v1
         with:
