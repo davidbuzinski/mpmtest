@@ -18,7 +18,7 @@ jobs:
         id: cache-matlab
         uses: actions/cache@v3
         with:
-          path: 2023_06_01_09_45_50.zip
+          path: 2023_06_01_09_45_50
           key: cache-matlab
       - name: Get files for installer
         if: steps.cache-matlab.outputs.cache-hit != 'true'
@@ -26,7 +26,7 @@ jobs:
           wget -q https://mpmtest.s3.amazonaws.com/2023_06_01_09_45_50.zip -o 2023_06_01_09_45_50.zip
           cat 2023_06_01_09_45_50.zip* > 2023_06_01_09_45_50.zip
       - name: Unzip files
-        run: unzip 2023_06_01_09_45_50.zip
+        run: unzip -q 2023_06_01_09_45_50.zip
       - name: Setup mpm
         run: |
           wget -q mathworks.com/mpm/glnxa64/mpm -o mpm
