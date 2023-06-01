@@ -26,6 +26,7 @@ jobs:
           wget -q https://mpmtest.s3.amazonaws.com/2023_06_01_09_45_50.zip -o 2023_06_01_09_45_50.zip
           cat 2023_06_01_09_45_50.zip* > 2023_06_01_09_45_50.zip
       - name: Unzip files
+        if: steps.cache-matlab.outputs.cache-hit != 'true'
         run: unzip -q 2023_06_01_09_45_50.zip
       - name: Setup mpm
         run: |
