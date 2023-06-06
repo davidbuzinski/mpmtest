@@ -38,7 +38,7 @@ jobs:
       - name: Setup mpm
         run: |
           curl https://mathworks.com/mpm/win64/mpm -L -o mpm.zip
-          Expand-Archive 2023_06_06_09_11_28.zip -DestinationPath .
+          Expand-Archive mpm.zip -DestinationPath .
       - name: Install MATLAB
         shell: bash
         run: |
