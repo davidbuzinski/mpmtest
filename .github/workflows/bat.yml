@@ -29,13 +29,12 @@ jobs:
         if: steps.cache-matlab.outputs.cache-hit != 'true'
         shell: bash
         run: |
-          wget -q https://mpmtest.s3.amazonaws.com/2023_06_06_09_11_28.zip -o 2023_06_01_09_45_50.zip
-          cat 2023_06_01_09_45_50.zip* > 2023_06_01_09_45_50.zip
-          ls
+          curl -O https://mpmtest.s3.amazonaws.com/2023_06_06_09_11_28.zip
       - name: Unzip files
         if: steps.cache-matlab.outputs.cache-hit != 'true'
-        shell: bash
-        run: unzip -q 2023_06_06_09_11_28.zip
+        run: |
+          Expand-Archive 2023_06_06_09_11_28.zip -DestinationPath 2023_06_06_09_11_28
+          ls 2023_06_06_09_11_28
       - name: Setup mpm
         shell: bash
         run: |
