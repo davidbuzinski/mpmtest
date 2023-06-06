@@ -10,7 +10,7 @@ jobs:
         run: echo "hello"
   integ:
     needs: bat
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       fail-fast: true
     steps:
@@ -18,28 +18,33 @@ jobs:
         id: cache-matlab
         uses: actions/cache@v3
         with:
-          path: 2023_06_01_09_45_50
-          key: cache-matlab
+          path: 2023_06_06_09_11_28
+          key: cache-matlab-win
       - name: Setup deps
+        shell: bash
         run: |
           wget -qO- --retry-connrefused https://ssd.mathworks.com/supportfiles/ci/matlab-batch/v0/install.sh | sudo bash -s
-          wget -qO- --retry-connrefused https://ssd.mathworks.com/supportfiles/ci/matlab-deps/v0/install.sh | sudo bash -s
+          # wget -qO- --retry-connrefused https://ssd.mathworks.com/supportfiles/ci/matlab-deps/v0/install.sh | sudo bash -s
       - name: Get files for installer
         if: steps.cache-matlab.outputs.cache-hit != 'true'
+        shell: bash
         run: |
-          wget -q https://mpmtest.s3.amazonaws.com/2023_06_01_09_45_50.zip -o 2023_06_01_09_45_50.zip
+          wget -q https://mpmtest.s3.amazonaws.com/2023_06_06_09_11_28.zip -o 2023_06_01_09_45_50.zip
           cat 2023_06_01_09_45_50.zip* > 2023_06_01_09_45_50.zip
+          ls
       - name: Unzip files
         if: steps.cache-matlab.outputs.cache-hit != 'true'
-        run: unzip -q 2023_06_01_09_45_50.zip
+        shell: bash
+        run: unzip -q 2023_06_06_09_11_28.zip
       - name: Setup mpm
+        shell: bash
         run: |
-          wget -q mathworks.com/mpm/glnxa64/mpm -o mpm
-          cat mpm* > mpm
-          chmod +x mpm
+          curl https://mathworks.com/mpm/win64/mpm -L -v -o mpm.zip
+          unzip mpm.zip
       - name: Install MATLAB
+        shell: bash
         run: |
-          ./mpm install --source "$(pwd)/2023_06_01_09_45_50" --destination "$(pwd)" --products MATLAB Parallel_Computing_Toolbox
+          ./mpm/bin/mpm install --source "$(pwd)/2023_06_06_09_11_28" --destination "$(pwd)" --products MATLAB Parallel_Computing_Toolbox
           echo "$(pwd)/bin" >> $GITHUB_PATH
       - name: Run Sample MATLAB Command
         uses: matlab-actions/run-command@v1
