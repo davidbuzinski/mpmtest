@@ -34,17 +34,15 @@ jobs:
         if: steps.cache-matlab.outputs.cache-hit != 'true'
         run: |
           Expand-Archive 2023_06_06_09_11_28.zip -DestinationPath .
-          ls 2023_06_06_09_11_28
       - name: Setup mpm
         run: |
           curl https://mathworks.com/mpm/win64/mpm -L -o mpm.zip
           Expand-Archive mpm.zip -DestinationPath mpm
-          ls
-          ls mpm
+          ls mpm/bin
       - name: Install MATLAB
         shell: bash
         run: |
-          ./mpm/bin/mpm install --source "$(pwd)/2023_06_06_09_11_28" --destination "$(pwd)" --products MATLAB Parallel_Computing_Toolbox
+          ./mpm/bin/mpm.exe install --source "$(pwd)/2023_06_06_09_11_28" --destination "$(pwd)" --products MATLAB Parallel_Computing_Toolbox
           echo "$(pwd)/bin" >> $GITHUB_PATH
       - name: Run Sample MATLAB Command
         uses: matlab-actions/run-command@v1
