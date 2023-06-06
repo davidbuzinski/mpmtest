@@ -33,13 +33,12 @@ jobs:
       - name: Unzip files
         if: steps.cache-matlab.outputs.cache-hit != 'true'
         run: |
-          Expand-Archive 2023_06_06_09_11_28.zip -DestinationPath 2023_06_06_09_11_28
+          Expand-Archive 2023_06_06_09_11_28.zip -DestinationPath .
           ls 2023_06_06_09_11_28
       - name: Setup mpm
-        shell: bash
         run: |
-          curl https://mathworks.com/mpm/win64/mpm -L -v -o mpm.zip
-          unzip mpm.zip
+          curl https://mathworks.com/mpm/win64/mpm -L -o mpm.zip
+          Expand-Archive 2023_06_06_09_11_28.zip -DestinationPath .
       - name: Install MATLAB
         shell: bash
         run: |
