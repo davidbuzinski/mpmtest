@@ -18,11 +18,14 @@ jobs:
         id: cache-matlab
         uses: actions/cache@v3
         with:
-          path: 2023_06_06_09_11_28
+          path: |
+            2023_06_06_09_11_28
+            mpm
           key: cache-matlab-win
       - name: Setup deps
+        shell: bash
         run: |
-          curl -O --retry-connrefused https://ssd.mathworks.com/supportfiles/ci/matlab-batch/v0/install.sh
+          curl -O https://ssd.mathworks.com/supportfiles/ci/matlab-batch/v0/install.sh
           ./install.sh
           # wget -qO- --retry-connrefused https://ssd.mathworks.com/supportfiles/ci/matlab-deps/v0/install.sh | sudo bash -s
       - name: Get files for installer
@@ -35,6 +38,7 @@ jobs:
         run: |
           Expand-Archive 2023_06_06_09_11_28.zip -DestinationPath .
       - name: Setup mpm
+        if: steps.cache-matlab.outputs.cache-hit != 'true'
         run: |
           curl https://mathworks.com/mpm/win64/mpm -L -o mpm.zip
           Expand-Archive mpm.zip -DestinationPath mpm
