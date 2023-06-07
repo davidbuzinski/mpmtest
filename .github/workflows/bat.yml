@@ -46,6 +46,7 @@ jobs:
       - name: Install MATLAB
         run: |
           mkdir matlab
+          ls .\2023_06_06_09_11_28
           .\mpm\bin\win64\mpm.exe install --source .\2023_06_06_09_11_28 --destination matlab --products MATLAB Parallel_Computing_Toolbox
           Add-Content $env:GITHUB_PATH .\matlab\bin
       - name: Run Sample MATLAB Command
