@@ -14,6 +14,9 @@ jobs:
     strategy:
       fail-fast: true
     steps:
+      - name: check disks
+        run: fsutil fsinfo drives
+        shell: cmd
       - name: Cache files for installer
         id: cache-matlab
         uses: actions/cache@v3
@@ -44,10 +47,11 @@ jobs:
           Expand-Archive mpm.zip -DestinationPath mpm
           ls mpm/bin/win64
       - name: Install MATLAB
+        shell: bash
         run: |
           mkdir matlab
-          ls .\2023_06_06_09_11_28
-          .\mpm\bin\win64\mpm.exe install --source .\2023_06_06_09_11_28 --destination matlab --products MATLAB Parallel_Computing_Toolbox
+          ls ./2023_06_06_09_11_28
+          ./mpm/bin/win64/mpm install --source 2023_06_06_09_11_28 --destination matlab --products MATLAB Parallel_Computing_Toolbox
           Add-Content $env:GITHUB_PATH .\matlab\bin
       - name: Run Sample MATLAB Command
         uses: matlab-actions/run-command@v1
