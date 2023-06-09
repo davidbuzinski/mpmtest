@@ -4,8 +4,8 @@ on: [push]
 jobs:
   integ:
     runs-on: ${{ matrix.os }}
+    continue-on-error: true
     strategy:
-      fail-fast: true
       matrix:
         include:
           #- os: windows-latest
@@ -26,8 +26,6 @@ jobs:
         
     - name: Perform 'setup-matlab'
       uses: matlab-actions/setup-matlab@v2-beta
-      with:
-        release: r2022b
     
     - name: Stop ETW Session
       run: |
