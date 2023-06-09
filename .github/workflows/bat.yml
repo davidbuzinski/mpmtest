@@ -8,7 +8,7 @@ jobs:
       fail-fast: true
       matrix:
         include:
-          - os: windows-latest
+          #- os: windows-latest
           - os: windows-2019
     steps:
     - name: Download WPT
