@@ -50,7 +50,7 @@ jobs:
         shell: bash
         run: |
           ls ./2023_06_06_09_11_28
-          .\mpm\bin\win64\mpm install --source 2023_06_06_09_11_28 --destination "$(pwd)\matlab" --products MATLAB Parallel_Computing_Toolbox
+          ./mpm/bin/win64/mpm install --source 2023_06_06_09_11_28 --destination "$(pwd)/matlab" --products MATLAB Parallel_Computing_Toolbox
           Add-Content $env:GITHUB_PATH .\matlab\bin
       - name: Run Sample MATLAB Command
         uses: matlab-actions/run-command@v1
